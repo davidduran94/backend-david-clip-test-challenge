@@ -3,7 +3,9 @@ const boom = require("@hapi/boom");
 class CustomerService {
   constructor() {}
 
-  async find() {}
+  async find() {
+    return { client: "3" };
+  }
 
   async findOne(id) {}
 
