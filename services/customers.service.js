@@ -1,4 +1,5 @@
 const boom = require("@hapi/boom");
+const openpay = require("../libs/openpay");
 
 class CustomerService {
   constructor() {}
@@ -9,7 +10,14 @@ class CustomerService {
 
   async findOne(id) {}
 
-  async create(data) {}
+  async create(data, cb) {
+    console.log("creatinggg");
+    const customerRequest = {
+      ...data,
+      requires_account: false,
+    };
+    return openpay.customers.create(customerRequest, cb);
+  }
 
   async update(id, changes) {}
 

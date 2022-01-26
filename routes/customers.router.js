@@ -24,7 +24,11 @@ router.post(
   async (req, res, next) => {
     try {
       const body = req.body;
-      res.status(201).json(await service.create(body));
+      await service.create(body, (error, body, response) => {
+        console.log("result", response);
+        if (error) res.status(500).json(error);
+        else res.status(201).json(body);
+      });
     } catch (error) {
       next(error);
     }
@@ -39,7 +43,8 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      res.status(201).json(await service.update(id, body));
+      const result = service.update(id, body);
+      if (!result.error) res.status(201).json(result);
     } catch (error) {
       next(error);
     }
