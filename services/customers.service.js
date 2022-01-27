@@ -4,24 +4,31 @@ const openpay = require("../libs/openpay");
 class CustomerService {
   constructor() {}
 
-  async find() {
-    return { client: "3" };
+  async find(callback) {
+    return openpay.customers.list(callback);
   }
 
-  async findOne(id) {}
+  async findOne(customerId, cb) {
+    return openpay.customers.get(customerId, cb);
+  }
 
   async create(data, cb) {
-    console.log("creatinggg");
     const customerRequest = {
       ...data,
+      phone_number: data.phone,
       requires_account: false,
     };
+    delete customerRequest.phone;
     return openpay.customers.create(customerRequest, cb);
   }
 
-  async update(id, changes) {}
+  async update(customerId, changes, cb) {
+    return openpay.customers.update(customerId, newData, cb);
+  }
 
-  async delete(id) {}
+  async delete(customerId, cb) {
+    return openpay.customers.delete(customerId, cb);
+  }
 }
 
 module.exports = CustomerService;

@@ -4,6 +4,7 @@ const validationHandler = require("../middlewares/validator.handler");
 const {
   createCustomerSchema,
   getCustomerSchema,
+  deleteCustomerSchema,
   updateCustomerSchema,
 } = require("../schemas/customers.schema");
 
@@ -12,7 +13,12 @@ const service = new CustomerService();
 
 router.get("/", async (req, res, next) => {
   try {
-    res.json(await service.find());
+    await service.find((error, body) => {
+      console.log("body list users", body);
+      if (error) {
+        return res.status(500).json(error);
+      } else return res.status(201).json(body);
+    });
   } catch (error) {
     next(error);
   }
@@ -23,9 +29,7 @@ router.post(
   validationHandler(createCustomerSchema, "body"),
   async (req, res, next) => {
     try {
-      const body = req.body;
-      await service.create(body, (error, body, response) => {
-        console.log("result", response);
+      await service.create(req.body, (error, body) => {
         if (error) res.status(500).json(error);
         else res.status(201).json(body);
       });
@@ -43,8 +47,10 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const result = service.update(id, body);
-      if (!result.error) res.status(201).json(result);
+      await service.update(id, body, (error, body) => {
+        if (!error) res.status(201).json(body);
+        res.status(500).json(error);
+      });
     } catch (error) {
       next(error);
     }
@@ -53,11 +59,14 @@ router.patch(
 
 router.delete(
   "/:id",
-  validationHandler(getCustomerSchema, "params"),
+  validationHandler(deleteCustomerSchema, "params"),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      res.status(200).json(await service.delete(id));
+      await service.delete(id, (error, body) => {
+        if (!error) return res.status(201).json(body);
+        return res.status(500).json(error);
+      });
     } catch (error) {
       next(error);
     }

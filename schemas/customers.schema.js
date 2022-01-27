@@ -3,6 +3,7 @@ const Joi = require("joi");
 const name = Joi.string().min(3).max(30);
 const email = Joi.string().email();
 const lastName = Joi.string();
+const id = Joi.string();
 const phone = Joi.string();
 const address = Joi.object({
   city: Joi.string(),
@@ -14,6 +15,10 @@ const address = Joi.object({
 });
 
 const getCustomerSchema = Joi.object({});
+
+const deleteCustomerSchema = Joi.object({
+  id: id.required(),
+});
 
 const createCustomerSchema = Joi.object({
   name: name.required(),
@@ -33,4 +38,5 @@ module.exports = {
   getCustomerSchema,
   createCustomerSchema,
   updateCustomerSchema,
+  deleteCustomerSchema,
 };
