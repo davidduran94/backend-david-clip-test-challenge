@@ -29,14 +29,20 @@ const createCustomerSchema = Joi.object({
 });
 
 const updateCustomerSchema = Joi.object({
-  name,
-  lastName,
-  phone,
+  name: name.optional(),
+  lastName: lastName.optional(),
+  phone: phone.optional(),
+  email: email.optional(),
+});
+
+const updateCustomerIDSchema = Joi.object({
+  id: id.required(),
 });
 
 module.exports = {
   getCustomerSchema,
   createCustomerSchema,
   updateCustomerSchema,
+  updateCustomerIDSchema,
   deleteCustomerSchema,
 };

@@ -22,7 +22,7 @@ class CustomerService {
     return openpay.customers.create(customerRequest, cb);
   }
 
-  async update(customerId, changes, cb) {
+  async update(customerId, newData, cb) {
     return openpay.customers.update(customerId, newData, cb);
   }
 
