@@ -22,8 +22,12 @@ class CustomerService {
     return openpay.customers.create(customerRequest, cb);
   }
 
-  async update(customerId, newData, cb) {
-    return openpay.customers.update(customerId, newData, cb);
+  async update(customerId, data, cb) {
+    const customerRequest = {
+      ...data,
+      phone_number: data.phone,
+    };
+    return openpay.customers.update(customerId, customerRequest, cb);
   }
 
   async delete(customerId, cb) {
