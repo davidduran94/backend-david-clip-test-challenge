@@ -23,7 +23,7 @@ const deleteCustomerSchema = Joi.object({
 const createCustomerSchema = Joi.object({
   name: name.required(),
   lastName: lastName.optional(),
-  phone: phone.optional(),
+  phone: phone.required(),
   email: email.required(),
   address: address.optional(),
 });

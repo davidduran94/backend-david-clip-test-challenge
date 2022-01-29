@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
     await service.find((error, body) => {
       if (error) {
         return res.status(500).json(error);
-      } else return res.status(201).json(body);
+      } else return res.status(200).json(body);
     });
   } catch (error) {
     next(error);
@@ -65,7 +65,7 @@ router.delete(
       const { id } = req.params;
       await service.delete(id, (error, body) => {
         console.log("deleted...", error, body);
-        if (!error) return res.status(201).json(body);
+        if (!error) return res.status(200).json(body);
         return res.status(500).json(error);
       });
     } catch (error) {
