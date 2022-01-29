@@ -75,7 +75,7 @@ describe("App Routes", function () {
   });
 
   test("responds OK to PATCH customer", async () => {
-    const id = "aiycpbltiirfv9nt53qz";
+    const id = "aukcw3dvpqun34wzetr9";
     const res = await request(app)
       .patch(`/api/v1/customers/${id}`)
       .send({
@@ -88,6 +88,23 @@ describe("App Routes", function () {
 
     expect(res.header["content-type"]).toBe("application/json; charset=utf-8");
     expect(res.statusCode).toBe(201);
+    expect(res.text).toContain(id);
+  });
+
+  test("responds FAIL to PATCH customer that not exist", async () => {
+    const id = "aukcw3dvpsasqun34wzetr9";
+    const res = await request(app)
+      .patch(`/api/v1/customers/${id}`)
+      .send({
+        name: "daviddr",
+        email: "dsdfsdfs@mail.com.mx",
+        phone: "45298",
+      })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(res.header["content-type"]).toBe("application/json; charset=utf-8");
+    expect(res.statusCode).toBe(500);
     expect(res.text).toContain(id);
   });
 
