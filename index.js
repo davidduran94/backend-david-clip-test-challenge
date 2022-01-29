@@ -12,8 +12,12 @@ const {
 app.use(express.json());
 
 const whitelist = [
+  "http://localhost:3000",
   "http://localhost:3001",
+  "http://localhost:3002",
+  "http://localhost:3003",
   "https://pacific-fjord-47474.herokuapp.com",
+  "http://pacific-fjord-47474.herokuapp.com/",
 ];
 const options = {
   origin: (origin, callback) => {
